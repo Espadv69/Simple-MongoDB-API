@@ -59,17 +59,19 @@ const server = app.listen(PORT, () =>
 )
 
 // Manejo de cierre del servidor
-const cleanUp = () => {
-  console.log('🔻 Closing server...')
+const cleanUp = async () => {
+  console.log('\n🔻 Closing server...')
 
-  // Cerrar la conexión con MongoDB
-  mongoose.connection.close(() => {
-    console.log('MongoDB connection closed 🗑️')
+  try {
+    await mongoose.connection.close() // Cierra MongoDB sin callback
+    console.log('🗑️ MongoDB connection closed.')
+  } catch (err) {
+    console.error('Error closing MongoDB:', err)
+  }
 
-    server.close(() => {
-      console.log('Server shut down ✅')
-      process.exit(0)
-    })
+  server.close(() => {
+    console.log('✅ Server shut down.')
+    process.exit(0)
   })
 }
 
