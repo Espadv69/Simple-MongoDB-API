@@ -11,10 +11,7 @@ app.use(cors())
 
 // Conectar a MongoDB
 mongoose
-  .connect('mongodb://127.0.0.1:27017/users', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect('mongodb://127.0.0.1:27017/users')
   .then(() => console.log('MongoDB connected ✅'))
   .catch((err) => console.error('MongoDB connection failed ❌', err))
 
@@ -30,6 +27,15 @@ const User = mongoose.model(
 
 app.get('/', async (req, res) => {
   res.send('This is the body page')
+})
+
+app.get('/get-users', async (req, res) => {
+  try {
+    const users = await User.find()
+    res.json(users)
+  } catch (err) {
+    res.status(500).json({ message: 'Error fetching users', error: err })
+  }
 })
 
 // Ruta para añadir usuario
