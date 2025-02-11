@@ -1,43 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add User</title>
+  </head>
+  <body>
+    <h2>Add User</h2>
+    <form class="useForm">
+      <input type="text" class="name" placeholder="Name" required>
+      <input type="email" class="email" placeholder="Email" required>
+      <input type="password" class="password" placeholder="Password" required>
+      <button>Submit</button>
+    </form>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Add User</title>
-</head>
+    <h2>Users list</h2>
+    <ul class="usersList"></ul>
 
-<body>
-  <h2>Add User</h2>
-  <form class="useForm">
-    <input type="text" class="name" placeholder="Name" required>
-    <input type="email" class="email" placeholder="Email" required>
-    <input type="password" class="password" placeholder="Password" required>
-    <button>Submit</button>
-  </form>
+    <script>
+      document.querySelector('.useForm').addEventListener('submit', async function (event) {
+        event.preventDefault()
 
-  <h2>Users list</h2>
-  <ul class="usersList"></ul>
+        const name = document.querySelector('.name').value
+        const email = document.querySelector('.email').value
+        const password = document.querySelector('.password').value
 
-  <script>
-    document.querySelector('.useForm').addEventListener('submit', async function (event) {
-      event.preventDefault()
+        const response = await fetch('http://localhost:5000/add-user', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, password })
+        })
 
-      const name = document.querySelector('.name').value
-      const email = document.querySelector('.email').value
-      const password = document.querySelector('.password').value
-
-      const response = await fetch('http://localhost:5000/add-user', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password })
+        const data = await response.json()
+        alert(data.message)
+        loadUsers()
       })
 
-      const data = await response.json()
-      alert(data.message)
-      loadUsers() // toDo
-    })
-  </script>
-</body>
+      async function loadUsers() {
+        const response = await fetch('http://localhost:5000/get-users')
+        const users = await response.json()
 
+        const $userList = document.querySelector('.usersList')
+        $userList.innerHTML = ''
+        users.forEach(user => {
+          const $li = document.createElement('li')
+          $li.textContent = `${user.name} - ${user.email}`
+          $userList.appendChild($li)
+        })
+      }
+
+      loadUsers()
+    </script>
+  </body>
 </html>
