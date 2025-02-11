@@ -35,3 +35,9 @@ app.post('/add-user', async (req, res) => {
 
   res.json({ message: 'User added', user })
 })
+
+// Iniciar servidor
+const PORT = process.env.PORT || 5000
+app.listen(PORT, () =>
+  console.log(`🚀 Server running on http://localhost:${PORT}`)
+)
