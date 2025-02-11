@@ -57,3 +57,18 @@ app.post('/add-user', async (req, res) => {
 const server = app.listen(PORT, () =>
   console.log(`🚀 Server running on http://localhost:${PORT}`)
 )
+
+// Manejo de cierre del servidor
+const cleanUp = () => {
+  console.log('🔻 Closing server...')
+
+  // Cerrar la conexión con MongoDB
+  mongoose.connection.close(() => {
+    console.log('MongoDB connection closed 🗑️')
+
+    server.close(() => {
+      console.log('Server shut down ✅')
+      process.exit(0)
+    })
+  })
+}
