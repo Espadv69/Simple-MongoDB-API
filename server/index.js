@@ -9,7 +9,10 @@ app.use(express.json())
 
 // Conectar a MongoDB
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect('mongodb://127.0.0.1:27017/users', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log('MongoDB connected ✅'))
   .catch((err) => console.error('MongoDB connection failed ❌', err))
 
@@ -22,6 +25,10 @@ const User = mongoose.model(
     password: String,
   })
 )
+
+app.get('/', async (req, res) => {
+  res.send('This is the body page')
+})
 
 // Ruta para añadir usuario
 app.post('/add-user', async (req, res) => {
