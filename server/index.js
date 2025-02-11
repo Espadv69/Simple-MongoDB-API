@@ -72,3 +72,7 @@ const cleanUp = () => {
     })
   })
 }
+
+// Capturar señales para apagar el servidor limpiamente
+process.on('SIGINT', cleanUp) // Ctrl + C en el terminal
+process.on('SIGTERM', cleanUp) // Signal de sistemas tipo Linux
