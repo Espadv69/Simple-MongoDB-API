@@ -1,20 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add User</title>
-  </head>
-  <body>
-    <h2>Add User</h2>
-    <form class="useForm">
-      <input type="text" class="name" placeholder="Name" required>
-      <input type="email" class="email" placeholder="Email" required>
-      <input type="password" class="password" placeholder="Password" required>
-      <button>Submit</button>
-    </form>
 
-    <h2>Users list</h2>
-    <ul class="usersList"></ul>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add User</title>
+</head>
+
+<body>
+  <h2>Add User</h2>
+  <form class="useForm">
+    <input type="text" class="name" placeholder="Name" required>
+    <input type="email" class="email" placeholder="Email" required>
+    <input type="password" class="password" placeholder="Password" required>
+    <button>Submit</button>
+  </form>
+
+  <h2>Users list</h2>
+  <ul class="usersList"></ul>
+
+  <script>
+    document.querySelector('.useForm').addEventListener('submit', async function (event) {
+      event.preventDefault()
+
+      const name = document.querySelector('.name').value
+      const email = document.querySelector('.email').value
+      const password = document.querySelector('.password').value
+
+      const response = await fetch('http://localhost:5000/add-user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password })
+      })
+
+      const data = await response.json()
+      alert(data.message)
+      loadUsers() // toDo
+    })
+  </script>
+</body>
+
 </html>
