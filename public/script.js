@@ -24,9 +24,14 @@ async function loadUsers() {
 
   const $userList = document.querySelector('.usersList')
   $userList.innerHTML = ''
+
   users.forEach((user) => {
     const $li = document.createElement('li')
-    $li.textContent = `${user.name} - ${user.email}`
+    $li.innerHTML = `
+      <p>${user.name} - ${user.email}</p>
+      <button onclick="deleteUser('${user._id}')">❌ Delete</button>
+      <button onclick="editUser('${user._id}')">✏️ Edit</button>
+    `
     $userList.appendChild($li)
   })
 }
