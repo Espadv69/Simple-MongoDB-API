@@ -48,4 +48,21 @@ async function deleteUser(userId) {
   loadUsers()
 }
 
+async function editUser(UserId) {
+  const newName = prompt('Enter new name:')
+  const newEmail = prompt('Enter new email:')
+
+  if (!newName || !newEmail) return
+
+  const response = await fetch(`http://localhost:5000/update-user/${UserId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: newName, email: newEmail }),
+  })
+
+  const data = await response.json()
+  alert(data.message)
+  loadUsers()
+}
+
 loadUsers()
