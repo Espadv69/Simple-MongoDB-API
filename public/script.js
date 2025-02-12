@@ -36,4 +36,16 @@ async function loadUsers() {
   })
 }
 
+async function deleteUser(userId) {
+  if (!confirm('Are you sure ypu want to delete this user?')) return
+
+  const response = await fetch(`http://localhost:5000/delete-user/${userId}`, {
+    method: 'DELETE',
+  })
+
+  const data = await response.json()
+  alert(data.message)
+  loadUsers()
+}
+
 loadUsers()
