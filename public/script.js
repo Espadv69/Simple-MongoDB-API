@@ -3,9 +3,13 @@ document
   .addEventListener('submit', async function (event) {
     event.preventDefault()
 
-    const name = document.querySelector('.name').value
-    const email = document.querySelector('.email').value
-    const password = document.querySelector('.password').value
+    const $name = document.querySelector('.name')
+    const $email = document.querySelector('.email')
+    const $password = document.querySelector('.password')
+
+    const name = $name.value
+    const email = $email.value
+    const password = $password.value
 
     const response = await fetch('http://localhost:5000/add-user', {
       method: 'POST',
@@ -16,6 +20,11 @@ document
     const data = await response.json()
     alert(data.message)
     loadUsers()
+
+    // Limpiar inputs
+    $name.value = ''
+    $email.value = ''
+    $password.value = ''
   })
 
 async function loadUsers() {
