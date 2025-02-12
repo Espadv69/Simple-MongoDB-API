@@ -53,6 +53,28 @@ app.post('/add-user', async (req, res) => {
   res.json({ message: 'User added', user })
 })
 
+// Ruta para actualizar usuario
+app.put('/update-user/:id', async (req, res) => {
+  try {
+    const { id } = req.params
+    const { name, email, password } = req.body
+
+    const updateUser = await User.findByIdAndUpdate(
+      id,
+      { name, email, password },
+      { new: true }
+    )
+
+    if (!updateUser) {
+      return res.status(404).json({ message: 'User not found' })
+    }
+
+    res.json({ message: 'User updated successfully', user: updateUser })
+  } catch (err) {
+    res.status(500).json({ message: 'Error updating user', error: err })
+  }
+})
+
 // Iniciar servidor
 const server = app.listen(PORT, () =>
   console.log(`🚀 Server running on http://localhost:${PORT}`)
