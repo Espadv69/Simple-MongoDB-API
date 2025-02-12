@@ -75,6 +75,22 @@ app.put('/update-user/:id', async (req, res) => {
   }
 })
 
+// Ruta para borrar usuario
+app.delete('/delete-user/:id', async (req, res) => {
+  try {
+    const { id } = req.params
+    const deleteUser = await User.findByIdAndDelete(id)
+
+    if (!deleteUser) {
+      res.status(404).json({ message: 'User not found' })
+    }
+
+    res.json({ message: 'User delete successfully' })
+  } catch (err) {
+    res.status(500).json({ message: 'Error deleting user', error: err })
+  }
+})
+
 // Iniciar servidor
 const server = app.listen(PORT, () =>
   console.log(`🚀 Server running on http://localhost:${PORT}`)
