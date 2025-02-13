@@ -28,6 +28,12 @@ body {
   background: #121212;
 }
 
+h2 {
+  margin-bottom: 1rem;
+
+  border-bottom: 2px solid yellow;
+}
+
 .useForm {
   display: flex;
   flex-direction: column;
