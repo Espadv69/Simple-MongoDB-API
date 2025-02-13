@@ -24,7 +24,7 @@ const User = mongoose.model(
     name: String,
     email: String,
     password: String,
-  })
+  }),
 )
 
 app.get('/', async (req, res) => {
@@ -62,7 +62,7 @@ app.put('/update-user/:id', async (req, res) => {
     const updateUser = await User.findByIdAndUpdate(
       id,
       { name, email, password },
-      { new: true }
+      { new: true },
     )
 
     if (!updateUser) {
@@ -93,7 +93,7 @@ app.delete('/delete-user/:id', async (req, res) => {
 
 // Iniciar servidor
 const server = app.listen(PORT, () =>
-  console.log(`🚀 Server running on http://localhost:${PORT}`)
+  console.log(`🚀 Server running on http://localhost:${PORT}`),
 )
 
 // Manejo de cierre del servidor
