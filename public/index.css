@@ -27,3 +27,32 @@ body {
   color: whitesmoke;
   background: #121212;
 }
+
+.useForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+
+  button {
+    cursor: pointer;
+    padding: .2rem;
+    width: 40%;
+
+    border: 2px solid yellow;
+    border-radius: 5px;
+
+    color: yellow;
+    background: transparent;
+  }
+
+  input {
+    padding: .4rem .5rem;
+
+    border: 0px;
+    border-bottom: 2px solid white;
+
+    color: white;
+    background: transparent;
+  }
+}
